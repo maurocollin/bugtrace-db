@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  database:
+    image: mariadb:10.11
+    container_name: bugtrace_mariadb
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root_secure_pass
+      MYSQL_DATABASE: bugtrace
+      MYSQL_USER: dev_user
+      MYSQL_PASSWORD: dev_password
+    ports:
+      - "3306:3306"
+    volumes:
+      - mariadb_data:/var/lib/mysql
+      # Esta pasta local conterá nossos scripts SQL de criação automática de tabelas futuramente
+      - ./init-scripts:/docker-entrypoint-initdb.d
+
+volumes:
+  mariadb_data:
